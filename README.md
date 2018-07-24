@@ -86,5 +86,5 @@ Putting [True] in sink Dummy
 # TODO
 
 * Grafana sink
-* Abn source
-* streaming sources? mqtt?
+* ABN source
+* custom configs for pipelines - telegram with no markdown for printer_mqtt
