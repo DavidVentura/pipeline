@@ -14,18 +14,23 @@ def get_class_from_name(name):
 class Pipeline():
     def __init__(self, plugin_list):
         data = None
+        pipeline_config = {}
+
         for p in plugin_list:
-            _class = get_class_from_name(p)
-            instance = _class()
+            _class = get_class_from_name(p['plugin'])
+            classname = _class.__name__
+            config = p['config']
+            instance = _class(config)
+
             # Sink -> Filter -> Map -> Source
 
             if isinstance(instance, SinkMixin):
-                print("Putting [%s] in sink %s" % (data, _class.__name__))
+                print("Putting [%s] in sink %s" % (data, classname))
                 instance.put_value(data)
 
             if isinstance(instance, FilterMixin):
                 result = instance.filter(data)
-                print("Passing [%s] to filter %s => %s" % (data, _class.__name__, "Filtered" if result else "Passed"))
+                print("Passing [%s] to filter %s => %s" % (data, classname, "Filtered" if result else "Passed"))
                 if result:
                     print("Filtering out!")
                     break
@@ -33,8 +38,8 @@ class Pipeline():
             if isinstance(instance, MapMixin):
                 _data = data
                 data = instance.process(data)
-                print("Processing [%s] in map %s => %s" % (_data, _class.__name__, data))
+                print("Processing [%s] in map %s => %s" % (_data, classname, data))
 
             if isinstance(instance, SourceMixin):
                 data = instance.get_value()
-                print("Got [%s] from source %s" % (data, _class.__name__))
+                print("Got [%s] from source %s" % (data, classname))
