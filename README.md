@@ -15,7 +15,7 @@ Special? cases:
 * 'tee' map: data -> translate(en, es)
 
 
-Desired examples
+# Desired examples
 
 config.ini
 ```ini
@@ -60,4 +60,21 @@ config.ini
     
     [translate_eng]
     translate_id = 0
+```
+
+
+# Setup
+```
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -e .
+```
+
+# Dummy usage
+```
+Got [Hello world] from source Dummy
+Passing [Hello world] to filter Dummy => Passed
+Processing [Hello world] in map Dummy => True
+Putting [True] in sink Dummy
+[From dummy sink] True
 ```
