@@ -4,7 +4,6 @@ def build(name):
     parser = ConfigParser()
     parser.read('../config.ini')
     config = parser._sections
-    print(config.keys())
     pconfig = config['pipeline.%s' % name]
     pipeline = [plugin.strip() for plugin in pconfig['pipeline'].split('|')]
     ret = []
