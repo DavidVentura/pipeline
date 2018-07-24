@@ -19,7 +19,7 @@ pipeline = [weather, to_markdown, telegram]
 pipeline = [printer_mqtt, filter_printer_states, to_markdown, telegram]
 
 [plugin.Gvb]
-apikey = 92e62dcf-42c3-40ba-a8dd-b28aba2888b3
+apikey = *****
 lines_interested = 50,53
 
 [plugin.abn]
@@ -34,7 +34,7 @@ CITY_ID = 2759794
 #amsterdam
 
 [plugin.filter_printer_states]
-progress = [1, 25, 50, 75, 100]
+progress = 1, 25, 50, 75, 100
 
 [plugin.translate_eng]
 translate_id = 0
