@@ -4,6 +4,9 @@
     telegram_bot_id = ******************************************
     telegram_chat_id = **
 
+[pipeline.dummy]
+pipeline = sources.dummy.Dummy | filters.dummy.Dummy | maps.dummy.Dummy | sinks.dummy.Dummy
+
 [pipeline.gvb]
 pipeline = sources.gvb.Gvb | filters.dummy.Dummy | maps.format_gvb.FormatGvb | sinks.dummy.Dummy
 # [gvb, tee, translate_eng, to_markdown, telegram]
