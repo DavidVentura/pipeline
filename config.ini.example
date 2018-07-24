@@ -7,17 +7,9 @@ pipeline = sources.dummy.Dummy | filters.dummy.Dummy | maps.dummy.Dummy | sinks.
 
 [pipeline.gvb]
 pipeline = sources.gvb.Gvb | maps.format_gvb.FormatGvb | sinks.telegram.Telegram
-# [gvb, tee, translate_eng, to_markdown, telegram]
-
-# gvb (item): no input, 1 output
-# tee: 1 input, 2 outputs
-# translate_eng:
-
-[pipeline.weather]
-pipeline = [weather, to_markdown, telegram]
 
 [pipeline.printer]
-pipeline = [printer_mqtt, filter_printer_states, to_markdown, telegram]
+pipeline = sources.mqtt.Mqtt | sinks.dummy.Dummy
 
 [plugin.Gvb]
 apikey = *****
@@ -26,6 +18,16 @@ lines_interested = 50,53
 [plugin.Telegram]
 bot_id = ******:------------
 chat_id = 9999999
+
+[plugin.Mqtt]
+host = iot
+port = 1883
+topics = octoprint/#
+
+# Not implemented below this message
+
+[pipeline.weather]
+pipeline = [weather, to_markdown, telegram]
 
 [plugin.abn]
 account = 111111111
