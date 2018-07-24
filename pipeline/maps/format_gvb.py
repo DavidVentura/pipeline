@@ -4,7 +4,7 @@ from pipeline.mixins.mixins import MapMixin
 def parse_date(date):
     return datetime.datetime.strptime(date.split("+")[0], "%Y-%m-%dT%H:%M:%S")
 
-def print_diversion(diversion):
+def format_diversion(diversion):
     ret = ""
     start = parse_date(diversion['startsAt']).strftime('%d/%m %H:%M')
     end = parse_date(diversion['endsAt']).strftime('%d/%m %H:%M')
@@ -19,4 +19,4 @@ def print_diversion(diversion):
 
 class FormatGvb(MapMixin):
     def process(self, data):
-        return [print_diversion(d) for d in data]
+        return format_diversion(data)

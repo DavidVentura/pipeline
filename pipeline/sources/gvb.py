@@ -37,4 +37,5 @@ def get_diversions(apikey, lines_interested):
 class Gvb(SourceMixin):
     def get_value(self):
         lines = [int(line.strip()) for line in self.config['lines_interested'].split(',')]
-        return get_diversions(self.config['apikey'], lines)
+        for d in get_diversions(self.config['apikey'], lines):
+            yield d

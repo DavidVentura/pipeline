@@ -4,7 +4,7 @@ attempt at a plugin-based pipeline for data.
 
 The 'plugins' have to be in one of these categories:
 
-* Sources: Should generate some kind of data
+* Sources: Should generate some kind of data - these are `iterators` which allow you to use generators and stream data.
 * Filters: Should decide if the data from a source should be passed onwards or cancelled.
 * Maps: Should map the source data to whatever is wanted in the output.
   * Should take many inputs and only modify those it has to, while passing the rest to the output
