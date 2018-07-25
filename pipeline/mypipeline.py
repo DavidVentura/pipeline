@@ -15,6 +15,7 @@ class Pipeline():
     def __init__(self, plugin_list):
         data = None
         pipeline_config = {}
+        state = {}
 
         source = plugin_list[0]
         _class = get_class_from_path(source['plugin'])
@@ -29,6 +30,10 @@ class Pipeline():
             for p in plugin_list:
                 _class = get_class_from_path(p['plugin'])
                 classname = _class.__name__
+
+                if classname not in state:
+                    state[classname] = {}
+
                 config = p['config']
                 instance = _class(config)
 
@@ -38,10 +43,12 @@ class Pipeline():
                     instance.put_value(data)
 
                 if isinstance(instance, FilterMixin):
+                    instance.set_state(state[classname])
                     result = instance.filter(data)
                     print("Passing [%s] to filter %s => %s" % (data, classname, "Filtered" if result else "Passed"))
                     if result:
                         break
+                    state[classname] = instance.get_state()
 
                 if isinstance(instance, MapMixin):
                     _data = data

@@ -15,6 +15,13 @@ class SinkMixin():
 class FilterMixin():
     def __init__(self, config):
         self.config = config
+        self.state = {}
+
+    def get_state(self):
+        return self.state
+
+    def set_state(self, state):
+        self.state = state
 
     def filter(self, data):
         raise NotImplementedError
