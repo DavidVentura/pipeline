@@ -20,25 +20,18 @@ Special? cases:
 config.ini
 ```ini
 [main]
-    grafana_url = http://your_stuff:8086/write?db=%s
-    driver = /home/you/chromedriver/chromedriver
+grafana_url = http://your_stuff:8086/write?db=%s
+driver = /home/you/chromedriver/chromedriver
 
 [pipeline.dummy]
 pipeline = sources.dummy.Dummy | filters.dummy.Dummy | maps.dummy.Dummy | sinks.dummy.Dummy
 
 [pipeline.gvb]
 pipeline = sources.gvb.Gvb | maps.format_gvb.FormatGvb | sinks.telegram.Telegram
-# [gvb, tee, translate_eng, to_markdown, telegram]
-
-# gvb (item): no input, 1 output
-# tee: 1 input, 2 outputs
-# translate_eng:
-
-[pipeline.weather]
-pipeline = [weather, to_markdown, telegram]
 
 [pipeline.printer]
-pipeline = [printer_mqtt, filter_printer_states, to_markdown, telegram]
+pipeline = sources.mqtt.Mqtt | filters.printer.MqttFilter | maps.format_printer.FormatPrinter | sinks.telegram.Telegram
+Telegram.parse_mode = text
 
 [plugin.Gvb]
 apikey = *****
@@ -47,6 +40,20 @@ lines_interested = 50,53
 [plugin.Telegram]
 bot_id = ******:------------
 chat_id = 9999999
+
+[plugin.Mqtt]
+host = iot
+port = 1883
+topics = octoprint/progress/printing, octoprint/event/PrinterStateChanged, octoprint/event/Homing
+
+[plugin.MqttFilter]
+progress = 1, 25, 50, 75, 100
+topics = octoprint/progress/printing, octoprint/event/PrinterStateChanged
+
+# Not implemented below this message
+
+[pipeline.weather]
+pipeline = [weather, to_markdown, telegram]
 
 [plugin.abn]
 account = 111111111
@@ -58,9 +65,6 @@ grafana_db = scripts_data
 API_KEY = ******************************
 CITY_ID = 2759794
 #amsterdam
-
-[plugin.filter_printer_states]
-progress = 1, 25, 50, 75, 100
 
 [plugin.translate_eng]
 translate_id = 0
