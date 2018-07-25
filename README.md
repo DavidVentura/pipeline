@@ -91,4 +91,3 @@ Putting [True] in sink Dummy
 
 * Grafana sink
 * ABN source
-* custom configs for pipelines - telegram with no markdown for printer_mqtt
